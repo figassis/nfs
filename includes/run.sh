@@ -1,5 +1,5 @@
 #!/bin/bash
-mount cmonautsassetstest
+mount smilio-assets-frankfurt
 
 keepgoing=1
 trap '{ echo "sigint"; keepgoing=0; }' SIGINT
