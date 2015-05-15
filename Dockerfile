@@ -24,15 +24,9 @@ RUN mkdir /envdir
 EXPOSE 2049/tcp 2049/udp
 # rpcbind
 EXPOSE 111/tcp 111/udp
-# mountd
-EXPOSE 1062/tcp 1062/udp
-# statd
-EXPOSE 1063/tcp 1063/udp
-# rquotad
-EXPOSE 1064/tcp 1064/udp
-# nlm
-EXPOSE 1065/tcp 1065/udp
 # nfs_callback_tcpport
 EXPOSE 1066/tcp
+# mountd
+EXPOSE 1067/tcp 1067/udp
 
 ENTRYPOINT ["/opt/bin/start_supervisord"]

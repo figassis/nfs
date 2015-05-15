@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
-set -x
+#set -x
 
 function unexportfs {
 	/usr/sbin/exportfs -f
