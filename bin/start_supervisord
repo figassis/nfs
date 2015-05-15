@@ -1,0 +1,18 @@
+#!/bin/bash
+set -e
+set -x
+
+if [[ $# -ne 1 ]]; then
+	echo "Usage: $0 objectivefs-bucket" >&2
+	exit 1
+fi
+
+export OBJECTIVEFS_BUCKET="$1"
+export RPCBIND_ARGS="${RPCBIND_ARGS:-}"
+export RPC_STATD_ARGS="${RPC_STATD_ARGS:-}"
+export RPC_IDMAPD_ARGS="${RPC_IDMAPD_ARGS:-}"
+export RPC_MOUNTD_ARGS="${RPC_MOUNTD_ARGS:-}"
+export RPC_RQUOTAD_ARGS="${RPC_RQUOTAD_ARGS:-}"
+export RPC_SVCGSSD_ARGS="${RPC_SVCGSSD_ARGS:-}"
+
+exec /usr/bin/supervisord --config /etc/supervisord.conf
