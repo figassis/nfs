@@ -25,4 +25,3 @@ docker run \
 ```
 
 Now you can `mount -t nfs -o nfsvers=4 hostname:/ /objectivefs`
-.
