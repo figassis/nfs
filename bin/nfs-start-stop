@@ -1,0 +1,33 @@
+#!/bin/bash
+set -e
+set -x
+
+declare -a units
+units=(
+	nfs-mounts
+	rpcbind
+	nfs-callback-port
+	exportfs
+	rpc.nfsd
+	rpc.idmapd
+	rpc.mountd
+)
+
+declare -a started_units
+
+function shutdown {
+	local unit
+	for unit in "${started_units[@]}"; do
+		supervisorctl stop "$unit"
+	done
+}
+trap shutdown EXIT
+
+for unit in "${units[@]}"; do
+	supervisorctl start "$unit"
+	started_units+=( "$unit" )
+done
+
+while true; do
+	sleep 1d
+done
