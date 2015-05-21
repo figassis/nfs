@@ -12,7 +12,11 @@ First create your filesystem elsewhere. Then:
 ```sh
 docker run \
 	--privileged \
-	-v /envdir:/envdir \
+	-e AWS_ACCESS_KEY_ID=<key_id> \
+	-e AWS_SECRET_ACCESS_KEY=<secret> \
+	-e AWS_DEFAULT_REGION=<region> \
+	-e OBJECTIVEFS_LICENSE=<license> \
+	-e OBJECTIVEFS_PASSPHRASE=<pass> \
 	-p 2049:2049/tcp \
 	-p 2049:2049/udp \
 	-p 111:111/tcp \
@@ -25,3 +29,12 @@ docker run \
 ```
 
 Now you can `mount -t nfs -o nfsvers=4 hostname:/ /objectivefs`
+
+### Note
+This is not a secure way to handle your ObjectiveFS passphrase or AWS secret
+key. Make sure you run this container only on trusted hosts. Suggestions for
+improvement are welcome!
+
+## Limitations
+ * Only one NFS server can be running on the host at a time.
+ * The NFS and Portmap ports (`2049` and `111` respectively) cannot be changed.
