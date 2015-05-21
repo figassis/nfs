@@ -11,8 +11,6 @@ trap unmount_all EXIT
 mount -t nfsd nfds /proc/fs/nfsd
 mount -t rpc_pipefs sunrpc /var/lib/nfs/rpc_pipefs
 
-/usr/bin/supervisorctl start all
-
 while true; do
 	sleep 1d
 done
