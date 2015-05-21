@@ -16,9 +16,9 @@ units=(
 declare -a started_units
 
 function shutdown {
-	local unit
-	for unit in "${started_units[@]}"; do
-		supervisorctl stop "$unit"
+	local i
+	for (( i=${#started_units[@]}-1; i>=0; i-- )); do
+		supervisorctl stop "${started_units[$i]}"
 	done
 }
 trap shutdown EXIT

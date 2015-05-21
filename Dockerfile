@@ -16,9 +16,7 @@ ADD bin /opt/bin
 
 # Install ObjectiveFS
 ADD bin/mount.objectivefs /sbin/
-RUN chmod +x /sbin/mount.objectivefs
 RUN mkdir /objectivefs
-RUN mkdir /envdir
 
 # nfs
 EXPOSE 2049/tcp 2049/udp
