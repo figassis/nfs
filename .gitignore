@@ -1,0 +1,7 @@
+.DS_Store
+helm/values/*
+env
+.env
+temp
+*.key
+*.pem
