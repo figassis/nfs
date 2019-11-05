@@ -29,10 +29,11 @@ ENV DISKCACHE_SIZE="2G:100G"
 
 
 # Install prerequisites.
-RUN yum -y update && yum -y install nfs-utils fuse python-setuptools nmap procps vim wget unzip git 
-RUN yum clean all
 ADD https://s3.amazonaws.com/files.nellcorp.com/assets/ofs/objectivefs-6.4-1.x86_64.rpm /
-RUN yum -y install objectivefs-6.4-1.x86_64.rpm && rm objectivefs-6.4-1.x86_64.rpm
+RUN yum -y update && yum -y install nfs-utils fuse python-setuptools nmap procps vim \
+    && yum -y install objectivefs-6.4-1.x86_64.rpm \
+    && yum clean all \
+    && rm objectivefs-6.4-1.x86_64.rpm
 
 # Install supervisord
 RUN yum install -y python2

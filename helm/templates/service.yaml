@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{include "objectivefs.fullname" .}}-service
+  labels:
+    app.kubernetes.io/name: {{include "objectivefs.name" .}}
+    helm.sh/chart: {{include "objectivefs.chart" .}}
+    app.kubernetes.io/instance: {{.Release.Name}}
+    app.kubernetes.io/managed-by: {{.Release.Service}}
+spec:
+  type: {{.Values.service.type}}
+  ports:
+    - port: {{.Values.service.port}}
+      targetPort: {{.Values.service.containerPort}}
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: {{include "objectivefs.name" .}}
+    app.kubernetes.io/instance: {{.Release.Name}}

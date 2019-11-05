@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "objectivefs.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ include "objectivefs.name" . }}
+    helm.sh/chart: {{ include "objectivefs.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "objectivefs.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "objectivefs.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      securityContext:
+        privileged: true
+      containers:
+        - name: objectivefs
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: nfs
+              containerPort: 2049
+              protocol: TCP
+          env:
+          - name: BUCKET
+            value: "{{ .Values.environment.bucket }}"
+          - name: OBJECTIVEFS_LICENSE
+            value: "{{ .Values.environment.license }}"
+          - name: OBJECTIVEFS_PASSPHRASE
+            value: "{{ .Values.environment.passphrase }}"
+          - name: AWS_ACCESS_KEY_ID
+            value: "{{ .Values.environment.awsKeyID }}"
+          - name: AWS_SECRET_ACCESS_KEY
+            value: "{{ .Values.environment.awsSecretKey }}"
+          - name: AWS_DEFAULT_REGION
+            value: "{{ .Values.environment.awsRegion }}"
+          - name: CACHESIZE
+            value: "{{ .Values.environment.cacheSize }}"
+          - name: DISKCACHE_SIZE
+            value: "{{ .Values.environment.diskCacheSize }}:{{ .Values.environment.freeDiskSpace }}"
+          - name: MOUNT_PATH
+            value: "/volume"
+          volumeMounts:
+            - name: cache
+              mountPath: "/var/cache/objectivefs"
+            - name: mount
+              mountPath: "/objectivefs"
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      volumes:
+        - name: mount
+          emptyDir: {}
+        - name: storage
+          persistentVolumeClaim:
+            claimName: {{ .Values.persistence.pvcName }}-{{ .Release.Name }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
