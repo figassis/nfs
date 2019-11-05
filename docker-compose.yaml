@@ -1,0 +1,30 @@
+version: "3"
+volumes:
+  cache:
+  mount:
+services:
+  objectivefs:
+    build: .
+    restart: always
+    container_name: ofs
+    privileged: true
+    ports:
+      - 2049:2049
+    volumes:
+      - cache:/var/cache/objectivefs
+      - mount:/objectivefs
+    environment:
+      BUCKET: nellcorpfs
+      #ACCOUNT: figassis@gmail.com
+      OBJECTIVEFS_LICENSE: ${OBJECTIVEFS_LICENSE}
+      OBJECTIVEFS_PASSPHRASE: ${OBJECTIVEFS_PASSPHRASE}
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_DEFAULT_REGION: us-east-1
+      CACHESIZE: "20%"
+      DISKCACHE_SIZE: "2G"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10M"
+        max-file: "3"
