@@ -1,12 +1,13 @@
 replicaCount: 1
 
 image:
-  repository: figassis/objectivenfs
-  tag: 0.0.2
+  repository: figassis/nfs
+  tag: 0.0.1
   pullPolicy: IfNotPresent
 
 environment:
-  bucket: 
+  bucket:
+  storage: objectivefs 
   license: 
   passphrase: 
   awsKeyID: 
@@ -26,9 +27,9 @@ persistence:
   existingClaim: false
   resourcePolicy: delete
   accessMode: ReadWriteOnce
-  size: 250Gi
+  size: 50Gi
   storageClass: ""
-  pvcName: objective-nfs
+  pvcName: nfs
 
 fullnameOverride: ""
 nameOverride: ""

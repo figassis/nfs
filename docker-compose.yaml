@@ -1,18 +1,51 @@
 version: "3"
-volumes:
-  cache:
 services:
-  objectivefs:
+  localnfs:
+    build: .
+    restart: always
+    container_name: local
+    privileged: true
+    ports:
+      - 2049:2049
+    volumes:
+      - local:/export
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10M"
+        max-file: "3"
+  goofynfs:
+    build: .
+    restart: always
+    container_name: goofys
+    privileged: true
+    ports:
+      - 2050:2049
+    volumes:
+      - goofys:/var/cache/data
+    environment:
+      BUCKET: static.nellcorp.com:wp #bucket[:prefix]
+      STORAGE: goofys
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_DEFAULT_REGION: us-east-1
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10M"
+        max-file: "3"
+  objectivenfs:
     build: .
     restart: always
     container_name: ofs
     privileged: true
     ports:
-      - 2049:2049
+      - 2051:2049
     volumes:
-      - cache:/var/cache/objectivefs
+      - objectivefs:/var/cache/data
     environment:
       BUCKET: nellcorpfs
+      STORAGE: objectivefs
       OBJECTIVEFS_LICENSE: ${OBJECTIVEFS_LICENSE}
       OBJECTIVEFS_PASSPHRASE: ${OBJECTIVEFS_PASSPHRASE}
       AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
@@ -25,3 +58,7 @@ services:
       options:
         max-size: "10M"
         max-file: "3"
+volumes:
+  local:
+  goofys:
+  objectivefs:

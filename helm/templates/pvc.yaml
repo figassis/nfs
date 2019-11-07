@@ -4,8 +4,8 @@ apiVersion: v1
 metadata:
   name: {{ .Values.persistence.pvcName }}-{{ .Release.Name }}
   labels:
-    app: {{ template "objectivefs.name" . }}
-    chart: {{ template "objectivefs.chart" . }}
+    app: {{ template "nfs.name" . }}
+    chart: {{ template "nfs.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
   annotations:
