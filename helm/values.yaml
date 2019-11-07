@@ -24,7 +24,7 @@ service:
 persistence:
   enabled: true
   existingClaim: false
-  resourcePolicy: keep
+  resourcePolicy: delete
   accessMode: ReadWriteOnce
   size: 250Gi
   storageClass: ""

@@ -1,1 +1,1 @@
-/objectivefs *(rw,async,no_subtree_check,mp,insecure,fsid=0)
+/objectivefs *(rw,async,no_subtree_check,no_root_squash,mp,insecure,fsid=0)

@@ -47,18 +47,18 @@ spec:
           - name: DISKCACHE_SIZE
             value: "{{ .Values.environment.diskCacheSize }}:{{ .Values.environment.freeDiskSpace }}"
           - name: MOUNT_PATH
-            value: "/volume"
+            value: "/objectivefs"
           volumeMounts:
             - name: cache
               mountPath: "/var/cache/objectivefs"
-            - name: mount
-              mountPath: "/objectivefs"
+            # - name: mount
+            #   mountPath: "/objectivefs"
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       volumes:
-        - name: mount
-          emptyDir: {}
-        - name: storage
+        # - name: mount
+        #   emptyDir: {}
+        - name: cache
           persistentVolumeClaim:
             claimName: {{ .Values.persistence.pvcName }}-{{ .Release.Name }}
       {{- with .Values.nodeSelector }}
