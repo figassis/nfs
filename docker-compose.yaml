@@ -1,7 +1,8 @@
 version: "3"
 services:
   localnfs:
-    build: .
+    #build: .
+    image: figassis/nfs:0.0.3
     restart: always
     container_name: local
     privileged: true
@@ -15,7 +16,8 @@ services:
         max-size: "10M"
         max-file: "3"
   goofynfs:
-    build: .
+    #build: .
+    image: figassis/nfs:0.0.3
     restart: always
     container_name: goofys
     privileged: true
@@ -35,7 +37,8 @@ services:
         max-size: "10M"
         max-file: "3"
   objectivenfs:
-    build: .
+    #build: .
+    image: figassis/nfs:0.0.3
     restart: always
     container_name: ofs
     privileged: true

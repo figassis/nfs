@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: figassis/nfs
-  tag: 0.0.2
+  tag: 0.0.3
   pullPolicy: IfNotPresent
 
 environment:
