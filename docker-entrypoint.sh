@@ -48,18 +48,21 @@ rpc.idmapd
 dbus-uuidgen --ensure
 dbus-daemon --system --fork
 
+rm /etc/supervisor.conf
 case $STORAGE in
 
   goofys)
-    exec /usr/bin/supervisord -n -c /etc/goofys.conf  
+    ln -s /etc/goofys.conf /etc/supervisor.conf
     ;;
 
   objectivefs)
-    exec /usr/bin/supervisord -n -c /etc/objectivefs.conf  
+    ln -s /etc/objectivefs.conf /etc/supervisor.conf
     ;;
 
   *)
     echo -n "Invalid storage option $STORAGE. Starting local NFS server";
-    exec /usr/bin/supervisord -n -c /etc/local.conf
+    ln -s /etc/local.conf /etc/supervisor.conf
     ;;
 esac
+
+exec /usr/bin/supervisord -n -c /etc/supervisor.conf

@@ -53,6 +53,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* \
     && mkdir -p /var/run/dbus /var/run/dbus /export /var/cache/data /var/log/supervisor \
     && chmod +x /docker-entrypoint.sh /usr/local/bin/goofys /usr/local/bin/catfs \
+    #https://github.com/moby/moby/issues/4064
     && rm /etc/mtab && ln -s /proc/mounts /etc/mtab
 
 ADD conf/ganesha.conf /etc/ganesha/

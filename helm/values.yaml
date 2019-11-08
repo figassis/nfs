@@ -13,9 +13,9 @@ environment:
   awsKeyID: 
   awsSecretKey: 
   awsRegion: 
-  cacheSize: "20%"
-  diskCacheSize: 100Gi
-  freeDiskSpace: 100Gi
+  cacheSize: "20%" #Memory Cache for OFS
+  diskCacheSize: 50Gi
+  freeDiskSpace: 20Gi
 
 service:
   type: ClusterIP
@@ -27,7 +27,7 @@ persistence:
   existingClaim: false
   resourcePolicy: delete
   accessMode: ReadWriteOnce
-  size: 50Gi
+  size: 80Gi
   storageClass: ""
   pvcName: nfs
 

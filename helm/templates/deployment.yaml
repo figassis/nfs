@@ -51,13 +51,13 @@ spec:
           volumeMounts:
             - name: data
               mountPath: "/var/cache/data"
-            # - name: mount
-            #   mountPath: "/export"
+            - name: mount
+              mountPath: "/export"
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       volumes:
-        # - name: mount
-        #   emptyDir: {}
+        - name: mount
+          emptyDir: {}
         - name: data
           persistentVolumeClaim:
             claimName: {{ .Values.persistence.pvcName }}-{{ .Release.Name }}
