@@ -1,8 +1,8 @@
 version: "3"
 services:
   localnfs:
-    #build: .
-    image: figassis/nfs:0.0.3
+    build: .
+    # image: figassis/nfs:0.0.3
     restart: always
     container_name: local
     privileged: true
@@ -15,53 +15,5 @@ services:
       options:
         max-size: "10M"
         max-file: "3"
-  goofynfs:
-    #build: .
-    image: figassis/nfs:0.0.3
-    restart: always
-    container_name: goofys
-    privileged: true
-    ports:
-      - 2050:2049
-    volumes:
-      - goofys:/var/cache/data
-    environment:
-      BUCKET: static.nellcorp.com:wp #bucket[:prefix]
-      STORAGE: goofys
-      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
-      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
-      AWS_DEFAULT_REGION: us-east-1
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "10M"
-        max-file: "3"
-  objectivenfs:
-    #build: .
-    image: figassis/nfs:0.0.3
-    restart: always
-    container_name: ofs
-    privileged: true
-    ports:
-      - 2051:2049
-    volumes:
-      - objectivefs:/var/cache/data
-    environment:
-      BUCKET: nellcorpfs
-      STORAGE: objectivefs
-      OBJECTIVEFS_LICENSE: ${OBJECTIVEFS_LICENSE}
-      OBJECTIVEFS_PASSPHRASE: ${OBJECTIVEFS_PASSPHRASE}
-      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
-      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
-      AWS_DEFAULT_REGION: us-east-1
-      CACHESIZE: "20%"
-      DISKCACHE_SIZE: "2G"
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "10M"
-        max-file: "3"
 volumes:
   local:
-  goofys:
-  objectivefs:
